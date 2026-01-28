@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public CinemaHallDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -56,5 +56,5 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         } catch (Exception e) {
             throw new DataProcessingException("Can not get cinema halls", e);
         }
-    };
+    }
 }

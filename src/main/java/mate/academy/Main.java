@@ -14,24 +14,21 @@ public class Main {
     public static void main(String[] args) {
         Injector injector = Injector.getInstance("mate.academy");
 
-        MovieService movieService =
-                (MovieService) injector.getInstance(MovieService.class);
-
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
-
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
-
         Movie movie = new Movie();
         movie.setTitle("Stranger Things");
         movie.setDescription("Must watch");
+
+        MovieService movieService =
+                (MovieService) injector.getInstance(MovieService.class);
 
         movie = movieService.add(movie);
 
         CinemaHall hall = new CinemaHall();
         hall.setCapacity(120);
         hall.setDescription("Big hall");
+
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
 
         hall = cinemaHallService.add(hall);
 
@@ -41,6 +38,9 @@ public class Main {
         session1.setMovie(movie);
         session1.setCinemaHall(hall);
         session1.setShowTime(LocalDateTime.now());
+
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         movieSessionService.add(session1);
 

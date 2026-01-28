@@ -13,7 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public MovieSessionDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

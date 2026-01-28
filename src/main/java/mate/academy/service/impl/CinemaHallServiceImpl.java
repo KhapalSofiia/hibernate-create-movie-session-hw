@@ -11,7 +11,7 @@ import mate.academy.service.CinemaHallService;
 public class CinemaHallServiceImpl implements CinemaHallService {
     private CinemaHallDao cinemaHallDao;
 
-    public CinemaHallServiceImpl (CinemaHallDao cinemaHallDao) {
+    public CinemaHallServiceImpl(CinemaHallDao cinemaHallDao) {
         this.cinemaHallDao = cinemaHallDao;
     }
 
@@ -25,7 +25,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
                 "Can not find cinema hall with id: " + id));
     }
 
-    public List<CinemaHall> getAll(){
+    public List<CinemaHall> getAll() {
         return cinemaHallDao.getAll();
     }
 }
