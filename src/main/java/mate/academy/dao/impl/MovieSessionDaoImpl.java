@@ -59,7 +59,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "WHERE ms.movie.id = :movieId "
                             + "AND ms.showTime >= :startOfDay "
                             + "AND ms.showTime < :endOfDay ", MovieSession.class);
-            getAllMovieSession .setParameter("movieId", movieId)
+            getAllMovieSession.setParameter("movieId", movieId)
                     .setParameter("startOfDay", startOfDay)
                     .setParameter("endOfDay", endOfDay);
             return getAllMovieSession.getResultList();
