@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.MovieSession;
 import org.hibernate.Session;
@@ -11,14 +12,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-public class MovieSessionDaoImpl {
+public class MovieSessionDaoImpl implements MovieSessionDao {
     SessionFactory sessionFactory;
 
     public MovieSessionDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public MovieSession add(MovieSession movieSession){
+    public MovieSession add(MovieSession movieSession) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -31,7 +32,7 @@ public class MovieSessionDaoImpl {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can not save movieSession", e);
+            throw new DataProcessingException("Can not save movie session", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -39,25 +40,25 @@ public class MovieSessionDaoImpl {
         }
     }
 
-    public Optional<MovieSession> get(Long id){
+    public Optional<MovieSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can not get cinema hall with id: "
+            throw new DataProcessingException("Can not get movie session with id: "
                     + id, e);
         }
     }
 
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date){
+    public List<MovieSession> findAvailableSessions(Long movieId,
+                                                    LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllMovieSession = session.createQuery(
-                    "from MovieSession "
-                            + "join left fetch movie on movie.id = :movieId "
-                            + "join left fetch cinema_hall on cinema_hall.id = :cinemaHall_id"
-                            + "where id = :movieId and ms.showTime >= :startOfDay "
-                            + "and ms.showTime < :endOfDay", MovieSession.class);
+                    "FROM MovieSession ms "
+                            + "WHERE ms.movie.id = :movieId "
+                            + "AND ms.showTime >= :startOfDay "
+                            + "AND ms.showTime < :endOfDay ", MovieSession.class);
             return getAllMovieSession.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can not find available movie sessions", e);

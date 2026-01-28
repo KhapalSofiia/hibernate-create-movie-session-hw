@@ -17,7 +17,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public CinemaHall add(CinemaHall cinemaHall){
+    public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -38,7 +38,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         }
     }
 
-    public Optional<CinemaHall> get(Long id){
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
@@ -53,6 +53,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     "from CinemaHall", CinemaHall.class
             );
             return getAllCinemaHall.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can not get cinema halls", e);
         }
     };
 }

@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -7,10 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import mate.academy.service.impl.MovieServiceImpl;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -37,12 +35,16 @@ public class Main {
 
         hall = cinemaHallService.add(hall);
 
+        System.out.println(cinemaHallService.get(hall.getId()));
+
         MovieSession session1 = new MovieSession();
         session1.setMovie(movie);
         session1.setCinemaHall(hall);
         session1.setShowTime(LocalDateTime.now());
 
         movieSessionService.add(session1);
+
+        System.out.println(movieSessionService.get(session1.getId()));
 
         MovieSession session2 = new MovieSession();
         session2.setMovie(movie);
