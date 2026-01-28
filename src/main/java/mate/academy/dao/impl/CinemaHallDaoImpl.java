@@ -2,20 +2,21 @@ package mate.academy.dao.impl;
 
 import java.util.List;
 import java.util.Optional;
+
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
+import mate.academy.lib.Inject;
 import mate.academy.model.CinemaHall;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+@Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    @Inject
     private SessionFactory sessionFactory;
-
-    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;

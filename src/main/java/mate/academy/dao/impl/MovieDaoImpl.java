@@ -5,6 +5,7 @@ import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
+import mate.academy.lib.Inject;
 import mate.academy.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,11 +14,8 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+    @Inject
     private SessionFactory sessionFactory;
-
-    public MovieDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public Movie add(Movie movie) {

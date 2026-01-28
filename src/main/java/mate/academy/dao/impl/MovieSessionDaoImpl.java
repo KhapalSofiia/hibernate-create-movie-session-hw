@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
+import mate.academy.lib.Inject;
 import mate.academy.model.MovieSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    @Inject
     private SessionFactory sessionFactory;
-
-    public MovieSessionDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -59,6 +59,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "WHERE ms.movie.id = :movieId "
                             + "AND ms.showTime >= :startOfDay "
                             + "AND ms.showTime < :endOfDay ", MovieSession.class);
+            getAllMovieSession .setParameter("movieId", movieId)
+                    .setParameter("startOfDay", startOfDay)
+                    .setParameter("endOfDay", endOfDay);
             return getAllMovieSession.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can not find available movie sessions", e);
